@@ -1,6 +1,7 @@
-from paho.mqtt import client as mqtt
-from time import sleep
 from socket import timeout
+from time import sleep
+
+from paho.mqtt import client as mqtt
 
 
 class MQTTConnectError(Exception):
@@ -22,16 +23,17 @@ def create_client(host, port, keepalive=60, tries=10, pause=5):
         try:
             client.connect(host, port, keepalive=keepalive)
         except timeout as e:
-            raise MQTTConnectError('Connect timed out.') from e
+            raise MQTTConnectError("Connect timed out.") from e
         except Exception as e:
             if i < tries - 1:
-                print(f"Failed to connect ({i+1}/{tries}). Retrying in {pause} seconds...")
+                print(
+                    f"Failed to connect ({i+1}/{tries}). Retrying in {pause} seconds..."
+                )
                 sleep(pause)
-                continue 
+                continue
             else:
-                raise MQTTConnectError('Max retries reached.') from e
+                raise MQTTConnectError("Max retries reached.") from e
         break
-
 
     client.loop_start()
     return client

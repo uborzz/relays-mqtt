@@ -78,7 +78,14 @@ class ScheduledHours:
 
 
 class TimedMqttRelay:
-    def __init__(self, mqtt_client: mqtt, mqtt_topic: str, trigger, start_on=True, refresh_time=None):
+    def __init__(
+        self,
+        mqtt_client: mqtt,
+        mqtt_topic: str,
+        trigger,
+        start_on=True,
+        refresh_time=None,
+    ):
         self._client = mqtt_client
         self.topic = mqtt_topic
         self.trigger = trigger
@@ -118,7 +125,7 @@ class TimedMqttRelay:
         if self.trigger.check(self.state):
             self.change_state()
         else:
-            if datetime.now() >=  self._refreshed + self._refresh_time:
+            if datetime.now() >= self._refreshed + self._refresh_time:
                 self.refresh()
 
     def __str__(self):
