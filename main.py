@@ -4,16 +4,13 @@ from time import sleep
 
 from dotenv import load_dotenv
 from relays import LazyPercentInterval, TimedMqttRelay
-from paho.mqtt import client as mqtt
+from mqtt import create_client
 
 load_dotenv()
 
-
 mqtt_host = os.getenv("MQTT_HOST")
 mqtt_port = int(os.getenv("MQTT_PORT"))
-
-client = mqtt.Client()
-client.connect(mqtt_host, mqtt_port)
+client = create_client(mqtt_host, mqtt_port)
 
 
 # sample
